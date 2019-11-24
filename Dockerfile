@@ -1,9 +1,16 @@
 FROM centos:7
 MAINTAINER XiangJL <xjl-tommy@qq.com>
 
+ENV FTP_CREATE_USER=true \
+    FTP_USERNAME=test \
+    FTP_PASSWORD=test \
+    FTP_AUTH_ORDER=pam \
+    FTP_ENABLE_DYNMASQ=false \
+    FTP_CLIENT_GBK=false
+
 # install software
 RUN yum update -y && \
-    yum install -y git gcc make gettext pam-devel mysql-devel && \
+    yum install -y git gcc make gettext file pam-devel mysql-devel && \
     yum clean all && \
     mkdir {/docker,/data}
 
@@ -16,7 +23,7 @@ COPY proftpd-vroot.conf /docker/proftpd-vroot.conf
 COPY proftpd-lang.conf /docker/proftpd-lang.conf
 COPY proftpd-delay.conf /docker/proftpd-delay.conf 
 COPY proftpd-dynmasq.conf /docker/proftpd-dynmasq.conf 
-COPY proftpd-auth.conf /docker/proftpd-auth.conf 
+COPY proftpd-auth-file.conf /docker/proftpd-auth-file.conf 
 
 RUN cd /usr/local/src/ && \
 #    curl ftp://ftp.proftpd.org/distrib/source/proftpd-1.3.6b.tar.gz > proftpd-1.3.6b.tar.gz && \
