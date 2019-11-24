@@ -10,11 +10,11 @@ if [ ! -f "/usr/local/etc/proftpd.conf" ]; then
 	cp "/docker/proftpd-dynmasq.conf" "/usr/local/etc/proftpd.d/mod_dynmasq.conf"
 	cp "/docker/proftpd-auth.conf" "/usr/local/etc/proftpd.d/mod_auth.conf"
 
-	echo test | ftpasswd --passwd --name test --uid 5000 --gid 5000 --home /usr/local/var/ftp/test --shell /sbin/nologin --file /usr/local/etc/proftpd.d/ftpd.passwd --stdin
+	echo test | ftpasswd --passwd --name test --uid 5000 --gid 5000 --home /data/ftproot/test --shell /sbin/nologin --file /usr/local/etc/proftpd.d/ftpd.passwd --stdin
 	ftpasswd --group --name test -gid 5000 --file /usr/local/etc/proftpd.d/ftpd.group
-	mkdir -p /usr/local/var/ftp/test
-	chown 5000:5000 /usr/local/var/ftp/test
-	chmod 775 /usr/local/var/ftp/test
+	mkdir -p /data/ftproot/test/
+	chown 5000:5000 /data/ftproot/test/
+	chmod 775 /data/ftproot/test/
 fi
 
 exec "$@"
