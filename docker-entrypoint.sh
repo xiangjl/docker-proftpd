@@ -1,32 +1,30 @@
 #!/bin/bash
 
 if [ -z "$FTP_CREATE_USER" ]; then
-	$FTP_CREATE_USER=true
+	FTP_CREATE_USER=true
 fi
 
 if [ -z "$FTP_USERNAME" ]; then
-	$FTP_USERNAME=test
+	FTP_USERNAME=test
 fi
 
 if [ -z "$FTP_PASSWORD" ]; then
-	$FTP_PASSWORD=test
+	FTP_PASSWORD=test
 fi
 
 if [ -z "$FTP_AUTH_ORDER" ]; then
-	$FTP_AUTH_ORDER=pam
+	FTP_AUTH_ORDER=pam
 fi
 
 if [ -z "$FTP_ENABLE_DYNMASQ" ]; then
-	$FTP_ENABLE_DYNMASQ=false
+	FTP_ENABLE_DYNMASQ=false
 fi
 
 if [ -z "$FTP_CLIENT_GBK" ]; then
-        $FTP_CLIENT_GBK=false
+        FTP_CLIENT_GBK=false
 fi
 
-if [ ! -f "/usr/local/etc/proftpd.conf" ]; then
-	mkdir -p "/usr/local/etc/proftpd.d/"
-	cp "/docker/proftpd-include.conf" "/usr/local/etc/proftpd.conf"
+if [ ! -f "/usr/local/etc/proftpd.d/proftpd.conf" ]; then
 	cp "/docker/proftpd-main.conf" "/usr/local/etc/proftpd.d/proftpd.conf"
 	cp "/docker/proftpd-vroot.conf" "/usr/local/etc/proftpd.d/mod_vroot.conf"
 	cp "/docker/proftpd-delay.conf" "/usr/local/etc/proftpd.d/mod_delay.conf"
