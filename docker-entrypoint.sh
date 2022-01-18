@@ -24,21 +24,37 @@ if [ -z "$FTP_CLIENT_GBK" ]; then
         FTP_CLIENT_GBK=false
 fi
 
+if [ -z "$FTP_ENABLE_VROOT" ]; then
+	FTP_ENABLE_VROOT=false
+fi
+
+if [ -z "$FTP_ENABLE_CLAMAV" ]; then
+	FTP_ENABLE_CLAMAV=false
+fi
+
 if [ ! -f "/usr/local/etc/proftpd.d/proftpd.conf" ]; then
+	mkdir -p "/usr/local/etc/proftpd.d/"
 	cp "/docker/proftpd-main.conf" "/usr/local/etc/proftpd.d/proftpd.conf"
-	cp "/docker/proftpd-vroot.conf" "/usr/local/etc/proftpd.d/mod_vroot.conf"
 	cp "/docker/proftpd-delay.conf" "/usr/local/etc/proftpd.d/mod_delay.conf"
 
 	if [ "$FTP_AUTH_ORDER" == "file" ]; then
 		cp "/docker/proftpd-auth-file.conf" "/usr/local/etc/proftpd.d/mod_auth.conf"
 	fi
-	
+
 	if [ "$FTP_CLIENT_GBK" == "true" ]; then
 		cp "/docker/proftpd-lang.conf" "/usr/local/etc/proftpd.d/mod_lang.conf"
 	fi
 
 	if [ "$FTP_ENABLE_DYNMASQ" == "true" ]; then
 		cp "/docker/proftpd-dynmasq.conf" "/usr/local/etc/proftpd.d/mod_dynmasq.conf"
+	fi
+
+	if [ "$FTP_ENABLE_VROOT" == "true" ]; then
+		cp "/docker/proftpd-vroot.conf" "/usr/local/etc/proftpd.d/mod_vroot.conf"
+	fi
+
+	if [ "$FTP_ENABLE_CLAMAV" == "true" ]; then
+		 cp "/docker/proftpd-clamav.conf" "/usr/local/etc/proftpd.d/mod_clamav.conf"
 	fi
 
 	if [ "$FTP_CREATE_USER" == "true" ]; then
